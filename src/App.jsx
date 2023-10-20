@@ -90,7 +90,7 @@ export const App = () => {
 
   return (
     <div className='container mx-auto p-2'>
-      <h1 className='text-4xl text-center mb-2'>TodoList</h1>
+      <h1 className='text-4xl text-center mb-2'>TodoList updated</h1>
       <div className='flex justify-between items-center gap-4 mb-4'>
         <div className='flex gap-1'>
           <button className='min-w-[80px] h-10 px-2 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded-lg capitalize transition-colors duration-300'>
