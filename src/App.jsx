@@ -22,6 +22,14 @@ export const App = () => {
   // стейт для поиска .
   const [searchTodo, setSearchTodo] = useState('')
 
+  // стейт для кнопок сортировки
+  const [sortButton, setSortButton] = useState('all')
+  console.log("App ~ sortButton:", sortButton)
+
+  const onSortButtonHandler = (value) => {
+    setSortButton(value)
+  }
+
   // функиця которая меняет стейт при вводе данных в инпут
   const todoNameHandler = (event) => {
     setTodoName(event.target.value)
@@ -30,6 +38,8 @@ export const App = () => {
   // функция которая добавляет в массив тудушек, одну тудушку
   const addTodoHandler = (event) => {
     event.preventDefault()
+
+    if(todoName.length === 0) return
 
     setTodos([
       // все что было до этого в массиве
@@ -88,18 +98,21 @@ export const App = () => {
   // const [isHovered, setIsHovered] = useState(false)
   // console.log('App ~ isHovered:', isHovered)
 
+  const sortButtonActiveStyle = 'bg-purple-600 text-white border-transparent hover:text-white'
+  const sortButtonCommonStyle = 'bg-transparent text-purple-600 border-purple-600 hover:text-white'
+
   return (
     <div className='container mx-auto p-2'>
       <h1 className='text-4xl text-center mb-2'>TodoList updated</h1>
       <div className='flex justify-between items-center gap-4 mb-4'>
         <div className='flex gap-1'>
-          <button className='min-w-[80px] h-10 px-2 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded-lg capitalize transition-colors duration-300'>
+          <button onClick={() => onSortButtonHandler('all')} className={`min-w-[80px] h-10 px-2 py-1 ${sortButton === 'all' ? sortButtonActiveStyle : sortButtonCommonStyle} border border-solid hover:bg-purple-700 rounded-lg capitalize transition-colors duration-300`}>
             all
           </button>
-          <button className='min-w-[80px] h-10 px-2 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded-lg capitalize transition-colors duration-300'>
+          <button onClick={() => onSortButtonHandler('active')} className={`min-w-[80px] h-10 px-2 py-1 ${sortButton === 'active' ? sortButtonActiveStyle : sortButtonCommonStyle} border border-solid hover:bg-purple-700 rounded-lg capitalize transition-colors duration-300`}>
             active
           </button>
-          <button className='min-w-[80px] h-10 px-2 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded-lg capitalize transition-colors duration-300'>
+          <button onClick={() => onSortButtonHandler('favorite')} className={`min-w-[80px] h-10 px-2 py-1 ${sortButton === 'favorite' ? sortButtonActiveStyle : sortButtonCommonStyle} border border-solid hover:bg-purple-700 rounded-lg capitalize transition-colors duration-300`}>
             favorite
           </button>
         </div>
@@ -111,11 +124,23 @@ export const App = () => {
             onChange={searchHandler}
           />
         </div>
-        <div className=''></div>
+        <div className=''>
+          <p>ostalos: {todos.filter(todo => !todo.isCompleted).length}</p>
+          <p>vipolneno: {todos.filter(todo => todo.isCompleted).length}</p>
+        </div>
       </div>
       <ul className='flex flex-col mb-4'>
         {todos
           .filter((todo) => todo.todoName.includes(searchTodo))
+          .filter(todo => {
+            if (sortButton === 'active') {
+              return !todo.isCompleted
+            }
+            if (sortButton === 'favorite') {
+              return todo.isFavorite
+            }
+            return todo
+          })
           .map((todo) => (
             <li className='flex justify-between items-center' key={todo.id}>
               <span
