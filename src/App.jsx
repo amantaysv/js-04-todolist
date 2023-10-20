@@ -19,7 +19,7 @@ export const App = () => {
   // стейт инпута для названия тудушки
   const [todoName, setTodoName] = useState('')
 
-  // стейт для поиска
+  // стейт для поиска .
   const [searchTodo, setSearchTodo] = useState('')
 
   // функиця которая меняет стейт при вводе данных в инпут
