@@ -13,6 +13,7 @@ export const Header = (props) => {
         <SortButton value='all' sortButton={sortButton} setSortButton={setSortButton} />
         <SortButton value='active' sortButton={sortButton} setSortButton={setSortButton} />
         <SortButton value='favorite' sortButton={sortButton} setSortButton={setSortButton} />
+        <SortButton value='deleted' sortButton={sortButton} setSortButton={setSortButton} />
       </div>
       <div className='flex-1'>
         <Search searchHandler={searchHandler} />
